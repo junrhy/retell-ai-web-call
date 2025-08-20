@@ -2,12 +2,12 @@
 // Replace these values with your actual Retell AI credentials
 
 export const retellConfig = {
-  // Your Retell AI Agent ID - Get this from your Retell dashboard
-  agentId: process.env.REACT_APP_RETELL_AGENT_ID || 'YOUR_AGENT_ID',
+  // Note: Retell AI credentials are handled by the backend
+  // Frontend only needs the backend URL to communicate with the API
+  agentId: 'BACKEND_HANDLED',
   
-  // Your Retell AI API Key (if required)
-  // Get this from your Retell dashboard under API settings
-  apiKey: process.env.REACT_APP_RETELL_API_KEY || 'YOUR_API_KEY',
+  // Note: API Key is handled by the backend for security
+  apiKey: 'BACKEND_HANDLED',
   
   // Optional: Custom configuration for the call
   callOptions: {
@@ -27,33 +27,25 @@ export const retellConfig = {
 
 // Environment-specific configurations
 export const getConfig = () => {
-  // In production, you might want to use environment variables
-  if (process.env.NODE_ENV === 'production') {
-    return {
-      agentId: process.env.REACT_APP_RETELL_AGENT_ID || retellConfig.agentId,
-      apiKey: process.env.REACT_APP_RETELL_API_KEY || retellConfig.apiKey,
-      callOptions: retellConfig.callOptions,
-      isDevelopment: false,
-    };
-  }
-  
-  return retellConfig;
+  // Frontend doesn't need Retell credentials - backend handles everything
+  return {
+    agentId: retellConfig.agentId,
+    apiKey: retellConfig.apiKey,
+    callOptions: retellConfig.callOptions,
+    isDevelopment: process.env.NODE_ENV !== 'production',
+  };
 };
 
 // Helper function to validate configuration
 export const validateConfig = (config) => {
   const errors = [];
   
-  if (!config.agentId || config.agentId === 'YOUR_AGENT_ID') {
-    errors.push('Agent ID is required. Please set your Retell AI Agent ID in config.js');
-  }
-  
-  if (config.apiKey === 'YOUR_API_KEY') {
-    console.warn('API Key not set. Some features may not work without an API key.');
-  }
+  // Frontend doesn't need to validate Retell credentials
+  // Backend handles all authentication and API calls
+  console.log('Frontend config validation: Backend handles all Retell AI credentials');
   
   return {
-    isValid: errors.length === 0,
-    errors,
+    isValid: true,
+    errors: [],
   };
 };
