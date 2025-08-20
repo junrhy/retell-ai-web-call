@@ -14,4 +14,4 @@ services:
       - key: RETELL_AGENT_ID
         sync: false  # Will be set in Render dashboard
       - key: REACT_APP_BACKEND_URL
-        value: https://retell-ai-webcall.onrender.com
+        value: https://retell-ai-web-call.onrender.com

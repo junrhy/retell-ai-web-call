@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://retell-ai-webcall.onrender.com', 'https://your-custom-domain.com']
+    ? 'https://retell-ai-web-call.onrender.com'
     : 'http://localhost:3000',
   credentials: true
 }));

@@ -65,7 +65,7 @@ RETELL_AGENT_ID=your-retell-agent-id
 ## 📊 **Monitoring**
 
 - **Service logs:** Available in Render dashboard
-- **Health check:** `https://your-service.onrender.com/api/health`
+- **Health check:** `https://retell-ai-web-call.onrender.com/api/health`
 
 ## 🚨 **Important Notes**
 
@@ -112,6 +112,6 @@ To update your application:
 ---
 
 **Your app will be available at:**
-- **Single URL:** `https://retell-ai-webcall.onrender.com`
-- **API Endpoints:** `https://retell-ai-webcall.onrender.com/api/*`
-- **Frontend:** `https://retell-ai-webcall.onrender.com`
+- **Single URL:** `https://retell-ai-web-call.onrender.com`
+- **API Endpoints:** `https://retell-ai-web-call.onrender.com/api/*`
+- **Frontend:** `https://retell-ai-web-call.onrender.com`
