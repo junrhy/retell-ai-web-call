@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const https = require('https');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -9,11 +10,14 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://retell-ai-frontend.onrender.com', 'https://your-custom-domain.com']
+    ? ['https://retell-ai-webcall.onrender.com', 'https://your-custom-domain.com']
     : 'http://localhost:3000',
   credentials: true
 }));
 app.use(express.json());
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Retell AI configuration
 const RETELL_API_KEY = process.env.RETELL_API_KEY || 'key_f87794c8cf05d7beda99f37e3293';
@@ -99,6 +103,11 @@ app.get('/api/health', (req, res) => {
     retell_agent_id: RETELL_AGENT_ID,
     api_key_configured: !!RETELL_API_KEY
   });
+});
+
+// Serve React app for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
 });
 
 app.listen(PORT, () => {

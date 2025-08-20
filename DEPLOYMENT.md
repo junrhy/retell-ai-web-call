@@ -8,15 +8,19 @@ This guide will help you deploy your Retell AI webcall application to Render.com
 
 Make sure your code is pushed to a Git repository (GitHub, GitLab, etc.).
 
-### 2. **Deploy Backend First**
+### 2. **Deploy Combined Service**
 
 1. **Go to [Render.com](https://render.com)** and sign up/login
 2. **Click "New +"** → **"Web Service"**
 3. **Connect your repository**
-4. **Configure the backend service:**
-   - **Name:** `retell-ai-backend`
+4. **Configure the service:**
+   - **Name:** `retell-ai-webcall`
    - **Environment:** `Node`
-   - **Build Command:** `cd backend && npm install`
+   - **Build Command:** 
+     ```bash
+     cd backend && npm install
+     cd ../frontend && npm install && npm run build
+     ```
    - **Start Command:** `cd backend && npm start`
    - **Plan:** Free (or choose paid plan)
 
@@ -26,50 +30,23 @@ Make sure your code is pushed to a Git repository (GitHub, GitLab, etc.).
    - `RETELL_API_KEY` = `your-retell-api-key`
    - `RETELL_AGENT_ID` = `your-retell-agent-id`
 
-6. **Deploy the backend**
+6. **Deploy the service**
 
-### 3. **Deploy Frontend**
+## 🔧 **How It Works**
 
-1. **Click "New +"** → **"Static Site"**
-2. **Connect the same repository**
-3. **Configure the frontend service:**
-   - **Name:** `retell-ai-frontend`
-   - **Build Command:** `cd frontend && npm install && npm run build`
-   - **Publish Directory:** `frontend/build`
-   - **Plan:** Free
-
-4. **Set Environment Variables:**
-   - `REACT_APP_BACKEND_URL` = `https://your-backend-name.onrender.com`
-
-5. **Deploy the frontend**
-
-### 4. **Update CORS Settings**
-
-After deployment, update the backend CORS settings in `backend/server.js`:
-
-```javascript
-app.use(cors({
-  origin: [
-    'https://your-frontend-name.onrender.com',
-    'https://your-custom-domain.com' // if you have one
-  ],
-  credentials: true
-}));
-```
+- **Single Service:** Both backend and frontend run on one service
+- **Backend:** Handles API calls and serves static files
+- **Frontend:** Built during deployment and served by backend
+- **Single URL:** Everything accessible at one domain
 
 ## 🔧 **Environment Variables**
 
-### Backend (.env or Render Dashboard)
+### Service Environment Variables (Render Dashboard)
 ```bash
 NODE_ENV=production
 PORT=10000
 RETELL_API_KEY=your-retell-api-key
 RETELL_AGENT_ID=your-retell-agent-id
-```
-
-### Frontend (Render Dashboard)
-```bash
-REACT_APP_BACKEND_URL=https://your-backend-name.onrender.com
 ```
 
 ## 🌐 **Custom Domains (Optional)**
@@ -87,9 +64,8 @@ REACT_APP_BACKEND_URL=https://your-backend-name.onrender.com
 
 ## 📊 **Monitoring**
 
-- **Backend logs:** Available in Render dashboard
-- **Frontend:** Static hosting, no server logs
-- **Health check:** `https://your-backend.onrender.com/api/health`
+- **Service logs:** Available in Render dashboard
+- **Health check:** `https://your-service.onrender.com/api/health`
 
 ## 🚨 **Important Notes**
 
@@ -136,5 +112,6 @@ To update your application:
 ---
 
 **Your app will be available at:**
-- Frontend: `https://your-frontend-name.onrender.com`
-- Backend: `https://your-backend-name.onrender.com`
+- **Single URL:** `https://retell-ai-webcall.onrender.com`
+- **API Endpoints:** `https://retell-ai-webcall.onrender.com/api/*`
+- **Frontend:** `https://retell-ai-webcall.onrender.com`

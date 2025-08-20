@@ -1,10 +1,12 @@
 services:
-  # Backend API service
+  # Combined Backend + Frontend service
   - type: web
-    name: retell-ai-backend
+    name: retell-ai-webcall
     env: node
     plan: free
-    buildCommand: cd backend && npm install
+    buildCommand: |
+      cd backend && npm install
+      cd ../frontend && npm install && npm run build
     startCommand: cd backend && npm start
     envVars:
       - key: NODE_ENV
@@ -15,14 +17,5 @@ services:
         sync: false  # Will be set in Render dashboard
       - key: RETELL_AGENT_ID
         sync: false  # Will be set in Render dashboard
-
-  # Frontend React app
-  - type: web
-    name: retell-ai-frontend
-    env: static
-    plan: free
-    buildCommand: cd frontend && npm install && npm run build
-    staticPublishPath: frontend/build
-    envVars:
       - key: REACT_APP_BACKEND_URL
-        value: https://retell-ai-backend.onrender.com
+        value: https://retell-ai-webcall.onrender.com
