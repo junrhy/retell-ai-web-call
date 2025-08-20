@@ -3,11 +3,11 @@
 
 export const retellConfig = {
   // Your Retell AI Agent ID - Get this from your Retell dashboard
-  agentId: 'agent_67d889ba25f2c1ff0861e66b2c',
+  agentId: process.env.REACT_APP_RETELL_AGENT_ID || 'YOUR_AGENT_ID',
   
   // Your Retell AI API Key (if required)
   // Get this from your Retell dashboard under API settings
-  apiKey: 'key_f87794c8cf05d7beda99f37e3293',
+  apiKey: process.env.REACT_APP_RETELL_API_KEY || 'YOUR_API_KEY',
   
   // Optional: Custom configuration for the call
   callOptions: {

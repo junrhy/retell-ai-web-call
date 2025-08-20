@@ -20,8 +20,19 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Retell AI configuration
-const RETELL_API_KEY = process.env.RETELL_API_KEY || 'key_f87794c8cf05d7beda99f37e3293';
-const RETELL_AGENT_ID = process.env.RETELL_AGENT_ID || 'agent_67d889ba25f2c1ff0861e66b2c';
+const RETELL_API_KEY = process.env.RETELL_API_KEY;
+const RETELL_AGENT_ID = process.env.RETELL_AGENT_ID;
+
+// Validate required environment variables
+if (!RETELL_API_KEY) {
+  console.error('❌ RETELL_API_KEY environment variable is required');
+  process.exit(1);
+}
+
+if (!RETELL_AGENT_ID) {
+  console.error('❌ RETELL_AGENT_ID environment variable is required');
+  process.exit(1);
+}
 
 // Endpoint to create web call and get access token
 app.post('/api/create-web-call', async (req, res) => {
@@ -112,7 +123,7 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`🚀 Backend server running on port ${PORT}`);
-  console.log(`🔑 Retell API Key: ${RETELL_API_KEY.substring(0, 10)}...`);
+  console.log(`🔑 Retell API Key: [CONFIGURED]`);
   console.log(`🤖 Retell Agent ID: ${RETELL_AGENT_ID}`);
   console.log(`📡 Health check: http://localhost:${PORT}/api/health`);
 });
