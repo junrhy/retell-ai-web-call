@@ -114,7 +114,8 @@ function App() {
       setCallStatus('Creating web call...');
       
       // Get access token from our backend
-      const response = await fetch('http://localhost:3001/api/create-web-call', {
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001';
+      const response = await fetch(`${backendUrl}/api/create-web-call`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
