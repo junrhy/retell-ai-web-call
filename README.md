@@ -1,70 +1,97 @@
-# Getting Started with Create React App
+# Retell AI Webcall Integration
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Structure
 
-## Available Scripts
+```
+retell-ai-webcall/
+├── frontend/          # React frontend application
+├── backend/           # Express backend server
+└── README.md         # This file
+```
 
-In the project directory, you can run:
+## Prerequisites
 
-### `npm start`
+Before running this application, you'll need:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Retell AI Account**: Sign up at [retellai.com](https://retellai.com)
+2. **AI Agent**: Create an AI agent in your Retell dashboard
+3. **Agent ID**: Get your agent ID from the Retell dashboard
+4. **API Key**: Get your API key from the Retell dashboard
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Quick Start
 
-### `npm test`
+### 1. Install All Dependencies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+# Install all dependencies (backend + frontend)
+npm run install-all
+```
 
-### `npm run build`
+### 2. Configure Backend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Edit `backend/.env`:
+```bash
+PORT=3001
+RETELL_API_KEY=your-api-key-here
+RETELL_AGENT_ID=your-agent-id-here
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 3. Start Both Backend and Frontend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# Start both servers simultaneously
+npm run dev
+```
 
-### `npm run eject`
+This will start:
+- Backend on `http://localhost:3001`
+- Frontend on `http://localhost:3000`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Alternative: Start Servers Separately
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+# Start backend only
+npm run backend
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# Start frontend only  
+npm run frontend
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 5. Test the Application
 
-## Learn More
+1. Open `http://localhost:3000` in your browser
+2. Click "Start Call with AI Agent"
+3. Allow microphone permissions when prompted
+4. Start talking with your Retell AI agent!
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Development
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Backend Development
 
-### Code Splitting
+```bash
+cd backend
+npm run dev  # Uses nodemon for auto-restart
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Frontend Development
 
-### Analyzing the Bundle Size
+```bash
+cd frontend
+npm start    # React development server
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## API Endpoints
 
-### Making a Progressive Web App
+### Backend (`http://localhost:3001`)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- `POST /api/create-web-call` - Creates a web call and returns access token
+- `GET /api/health` - Health check endpoint
 
-### Advanced Configuration
+## How It Works
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. **Frontend** requests microphone permission
+2. **Frontend** calls backend API to create web call
+3. **Backend** calls Retell AI API with your credentials
+4. **Backend** returns access token to frontend
+5. **Frontend** uses access token to start call with Retell AI SDK
+6. **Real-time communication** begins between user and AI agent
